@@ -30,7 +30,7 @@ const main = async () => {
     },
   ]);
   await stops1.save();
-  //   console.log("Created stops1!");
+  console.log("Created stops1!");
 
   const stops2 = new Stop([
     {
@@ -47,7 +47,7 @@ const main = async () => {
     },
   ]);
   await stops2.save();
-  //   console.log("Created stops2!");
+  console.log("Created stops2!");
 
   const trips = [
     {
