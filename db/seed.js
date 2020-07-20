@@ -65,11 +65,11 @@ const main = async () => {
   ];
   await Trip.insertMany(trips);
   console.log("Created two trips");
-
-  const run = async () => {
-    await main();
-    db.close();
-  };
-
-  run();
 };
+
+const run = async () => {
+  await main();
+  db.close();
+};
+
+run();
