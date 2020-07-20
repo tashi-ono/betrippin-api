@@ -7,4 +7,5 @@ const tripSchema = new mongoose.Schema({
   departureDate: { type: Date },
 });
 
-module.exports = mongoose.model("trip", tripSchema);
+const Trip = mongoose.model("trip", tripSchema);
+module.exports = Trip;
