@@ -23,4 +23,6 @@ mongoose
     console.error("Connection error", e.message);
   });
 
+mongoose.Promise = Promise;
+
 module.exports = mongoose;
