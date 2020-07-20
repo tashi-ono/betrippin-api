@@ -5,8 +5,9 @@ const Stop = require("../models/stop");
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
-const main = () => {
-  Trip.find({}).deleteMany(() => {
+// const main = () => {
+Trip.find({}).deleteMany(() => {
+  Stop.find({}).deleteMany(() => {
     let trip1 = Trip.create({
       name: "Summer Trip",
       packingList: ["coat", "gloves", "heater"],
@@ -60,11 +61,12 @@ const main = () => {
       });
     });
   });
-};
+});
+// };
 
-const run = async () => {
-  await main();
-  db.close();
-};
+// const run = async () => {
+//   await main();
+//   db.close();
+// };
 
-run();
+// run();
