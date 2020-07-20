@@ -9,7 +9,7 @@ const main = async () => {
   await Stop.deleteMany({});
   await Trip.deleteMany({});
 
-  const stops1 = new Stop([
+  const stops1 = [
     {
       name: "Lake Tahoe",
       lat: 39,
@@ -28,11 +28,12 @@ const main = async () => {
       lng: 90,
       thingsToDo: ["hiking", "camping"],
     },
-  ]);
-  await stops1.save();
+  ];
+//   console.log(stops1);
+  await Stop.insertMany(stops1);
   console.log("Created stops1!");
 
-  const stops2 = new Stop([
+  const stops2 = [
     {
       name: "North Pole",
       lat: 200,
@@ -45,8 +46,8 @@ const main = async () => {
       lng: 29,
       thingsToDo: ["swim in cold water", "riding a sled", "go fishing"],
     },
-  ]);
-  await stops2.save();
+  ];
+  await Stop.insertMany(stops2);
   console.log("Created stops2!");
 
   const trips = [
