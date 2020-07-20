@@ -54,13 +54,13 @@ const main = async () => {
       name: "Christmas trip",
       //   stops: stops1._id,
       //   packingList: ["food", "drinks", "pillows", "phones", "clothes"],
-      departureDate: Date(),
+      departureDate: "2018-12-19",
     },
     {
       name: "summer trip",
       //   stops: stops2._id,
       //   packingList: ["coat", "gloves", "beanies", "heater"],
-      departureDate: Date(),
+      departureDate: "2019-8-19",
     },
   ];
   await Trip.insertMany(trips);
