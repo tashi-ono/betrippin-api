@@ -6,7 +6,7 @@ const db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
 const main = () => {
-  Trip.find({}).remove(() => {
+  Trip.find({}).deleteMany(() => {
     let trip1 = Trip.create({
       name: "Summer Trip",
       packingList: ["coat", "gloves", "heater"],
