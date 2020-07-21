@@ -11,7 +11,7 @@ router.get("/", async (req, res) => {
 // read all the trips
 router.get("/trips", async (req, res) => {
   try {
-    const trips = await Trip.find();
+    const trips = await Trip.find({}).populate("stops");
     return res.json({ trips });
   } catch (error) {
     console.log("error");
@@ -22,7 +22,7 @@ router.get("/trips", async (req, res) => {
 // read a trip by its id
 router.get("/trips/:id", async (req, res) => {
   try {
-    const trip = await Trip.findById(req.params.id);
+    const trip = await Trip.findById(req.params.id).populate("stops");
     return res.json({ trip });
   } catch (error) {
     console.log("error");
