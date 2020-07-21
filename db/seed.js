@@ -19,7 +19,7 @@ Trip.find({}).deleteMany(() => {
           lng: 40,
           thingsToDo: ["ride a sled", "touch a Husky", "swim in ice sea"],
         }).then((createdStop) => {
-          createdStop.save();
+          //   createdStop.save();
           trip.stops.push(createdStop);
         }),
         Stop.create({
@@ -28,7 +28,7 @@ Trip.find({}).deleteMany(() => {
           lng: -190,
           thingsToDo: ["live in ice house", "catch a fish"],
         }).then((createdStop) => {
-          createdStop.save();
+          //   createdStop.save();
           trip.stops.push(createdStop);
         }),
       ]).then(() => {
@@ -43,21 +43,21 @@ Trip.find({}).deleteMany(() => {
     }).then((trip) => {
       Promise.all([
         Stop.create({
-          name: "North Pole",
+          name: "Australia",
           lat: 30,
           lng: 40,
-          thingsToDo: ["ride a sled", "touch a Husky", "swim in ice sea"],
+          thingsToDo: ["see kangaroos", "lie on the grass"],
         }).then((createdStop) => {
-          createdStop.save();
+          //   createdStop.save();
           trip.stops.push(createdStop);
         }),
         Stop.create({
-          name: "Alaska",
+          name: "Island",
           lat: 40,
           lng: -190,
-          thingsToDo: ["live in ice house", "catch a fish"],
+          thingsToDo: ["sunbathe", "swimming", "coconut"],
         }).then((createdStop) => {
-          createdStop.save();
+          //   createdStop.save();
           trip.stops.push(createdStop);
         }),
       ]).then(() => {
