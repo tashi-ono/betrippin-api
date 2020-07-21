@@ -6,6 +6,7 @@ const cors = require("cors");
 const logger = require("morgan");
 
 const tripsRouter = require("./controllers/trips");
+const stopsRouter = require("./controllers/stops")
 
 app.use(parser.json());
 app.use(cors());
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use(logger("dev"));
 
 app.use("/api", tripsRouter);
+app.use("/api", stopsRouter);
 
 app.set("port", process.env.PORT || 4000);
 app.listen(app.get("port"), () => {
