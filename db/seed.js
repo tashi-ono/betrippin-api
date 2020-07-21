@@ -5,10 +5,9 @@ const Stop = require("../models/stop");
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
-// const main = () => {
 Trip.find({}).deleteMany(() => {
   Stop.find({}).deleteMany(() => {
-    let trip1 = Trip.create({
+    Trip.create({
       name: "Summer Trip",
       packingList: ["coat", "gloves", "heater"],
       departureDate: "2019-8-13",
@@ -20,6 +19,7 @@ Trip.find({}).deleteMany(() => {
           lng: 40,
           thingsToDo: ["ride a sled", "touch a Husky", "swim in ice sea"],
         }).then((createdStop) => {
+          createdStop.save();
           trip.stops.push(createdStop);
         }),
         Stop.create({
@@ -28,13 +28,15 @@ Trip.find({}).deleteMany(() => {
           lng: -190,
           thingsToDo: ["live in ice house", "catch a fish"],
         }).then((createdStop) => {
+          createdStop.save();
           trip.stops.push(createdStop);
         }),
       ]).then(() => {
         trip.save();
       });
     });
-    let trip2 = Trip.create({
+
+    Trip.create({
       name: "Winter Trip",
       packingList: ["water", "sunscreen", "blanket"],
       departureDate: "2019-12-13",
@@ -46,6 +48,7 @@ Trip.find({}).deleteMany(() => {
           lng: 40,
           thingsToDo: ["ride a sled", "touch a Husky", "swim in ice sea"],
         }).then((createdStop) => {
+          createdStop.save();
           trip.stops.push(createdStop);
         }),
         Stop.create({
@@ -54,6 +57,7 @@ Trip.find({}).deleteMany(() => {
           lng: -190,
           thingsToDo: ["live in ice house", "catch a fish"],
         }).then((createdStop) => {
+          createdStop.save();
           trip.stops.push(createdStop);
         }),
       ]).then(() => {
@@ -62,6 +66,7 @@ Trip.find({}).deleteMany(() => {
     });
   });
 });
+
 // };
 
 // const run = async () => {
