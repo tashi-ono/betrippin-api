@@ -144,6 +144,7 @@ router.delete("/trips/:id", async (req, res) => {
     return res.status(500).send(error.message);
   }
 });
+
 // delete a stop by id
 router.delete("/stops/:id", async (req, res) => {
   try {
