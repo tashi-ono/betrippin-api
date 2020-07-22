@@ -60,54 +60,6 @@ router.put("/trips/:id", async (req, res) => {
   }
 });
 
-// update the name of the trip by its id
-router.put("/trips/:id/updateTripname", async (req, res) => {
-  try {
-    await Trip.findByIdAndUpdate(
-      req.params.id,
-      { $set: { name: req.body.name } },
-      { new: true },
-      (err, trip) => {
-        if (err) {
-          res.status(500).send("The error is: ", err);
-        }
-        if (!trip) {
-          res.status(500).send("Trip not found!");
-        }
-        return res.status(200).json(trip);
-      }
-    ).populate("stops");
-  } catch (error) {
-    return res.status(500).send("The error message is: ", error.message);
-  }
-});
-
-// add a stop to trip at a specific index
-// if index is -1 it will add it to the end of the list
-router.put("/trips/:tripId/addStop/:index", async (req, res) => {
-  try {
-    let stop = await Stop.create(req.body);
-    await stop.save();
-    let trip = await Trip.findById(req.params.tripId);
-    if (!trip) {
-      res.status(500).send("Trip not found!");
-    }
-    if (req.params.index == -1) {
-      await trip.stops.push(stop);
-    } else {
-      await trip.stops.push({
-        $each: [stop],
-        $position: parseInt(req.params.index),
-      });
-    }
-    await trip.save();
-    // console.log(trip);
-    return res.status(200).json(trip);
-  } catch (error) {
-    return res.status(500).send(error.message);
-  }
-});
-
 // update packing list to a trip
 router.put("/trips/:id/updatePackingList", async (req, res) => {
   try {
