@@ -61,11 +61,11 @@ router.put("/trips/:id", async (req, res) => {
 });
 
 // update the name of the trip by its id
-router.put("/trips/:id/tripname/:name", async (req, res) => {
+router.put("/trips/:id/updateTripname", async (req, res) => {
   try {
     await Trip.findByIdAndUpdate(
       req.params.id,
-      { $set: { name: req.params.name } },
+      { $set: { name: req.body.name } },
       { new: true },
       (err, trip) => {
         if (err) {
@@ -80,27 +80,6 @@ router.put("/trips/:id/tripname/:name", async (req, res) => {
   } catch (error) {
     return res.status(500).send("The error message is: ", error.message);
   }
-});
-
-// update stops to a trip
-router.put("/trips/:tripId/addStops/:stopId", (req, res) => {
-  Stop.findById(req.params.stopId, (err, stop) => {
-    if (err) console.log(err);
-    else {
-      Trip.findByIdAndUpdate(
-        req.params.tripId,
-        {
-          $push: {
-            stops: stop._id,
-          },
-        },
-        (err, trip) => {
-          if (err) console.log(err);
-          else res.send(trip);
-        }
-      );
-    }
-  });
 });
 
 // add a stop to trip at a specific index
@@ -130,11 +109,11 @@ router.put("/trips/:tripId/addStop/:index", async (req, res) => {
 });
 
 // update packing list to a trip
-router.put("/trips/:id/packingList/:content", async (req, res) => {
+router.put("/trips/:id/updatePackingList", async (req, res) => {
   try {
     await Trip.findByIdAndUpdate(
       req.params.id,
-      { $addToSet: { packingList: [req.params.content] } },
+      { $set: { packingList: JSON.parse(req.body.packingList) } },
       { new: true },
       (err, trip) => {
         if (err) {
@@ -152,11 +131,11 @@ router.put("/trips/:id/packingList/:content", async (req, res) => {
 });
 
 // update departure date by the trip id
-router.put("/trips/:id/departureDate/:date", async (req, res) => {
+router.put("/trips/:id/updateDepartureDate", async (req, res) => {
   try {
     await Trip.findByIdAndUpdate(
       req.params.id,
-      { $set: { departureDate: req.params.date } },
+      { $set: { departureDate: req.body.departureDate } },
       { new: true },
       (err, trip) => {
         if (err) {
@@ -182,20 +161,6 @@ router.delete("/trips/:id", async (req, res) => {
       return res.status(200).send("Trip deleted");
     }
     throw new Error("Trip not found");
-  } catch (error) {
-    return res.status(500).send(error.message);
-  }
-});
-
-// delete a packing list item from a trip
-router.delete("/trips/:id/deletePackingItem/:itemIndex", async (req, res) => {
-  try {
-    const trip = await Trip.findById(req.params.id);
-    if (!trip) {
-      res.status(500).send("Trip not found!");
-    } else {
-      trip.packingList.splice(req.params.itemIndex - 1, 1);
-    }
   } catch (error) {
     return res.status(500).send(error.message);
   }
