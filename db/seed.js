@@ -44,7 +44,7 @@ Trip.find({}).deleteMany(() => {
     }).then((trip) => {
       Promise.all([
         Stop.create({
-          name: "Sydney, Australia",
+          name: "Key West",
           lat: 24.5550593,
           lng: -81.7799871,
           thingsToDo: ["see dolphins", "lie on the grass"],
@@ -53,7 +53,7 @@ Trip.find({}).deleteMany(() => {
           trip.stops.push(createdStop);
         }),
         Stop.create({
-          name: "Miami, Florida",
+          name: "Miami",
           lat: 25.7616798,
           lng: -80.1917902,
           thingsToDo: ["sunbathe", "swimming", "coconut"],
@@ -62,7 +62,7 @@ Trip.find({}).deleteMany(() => {
           trip.stops.push(createdStop);
         }),
         Stop.create({
-          name: "Sarasota, Florida",
+          name: "Sarasota",
           lat: 27.3364347,
           lng: -82.53065269999999,
           thingsToDo: ["eat icecream", "visit uncle"],

@@ -104,6 +104,52 @@ router.put("/trips/:id/updateDepartureDate", async (req, res) => {
   }
 });
 
+// add a stop to trip at a specific index
+// if index is -1 it will add it to the end of the list
+router.put("/trips/:tripId/addStop/:index", async (req, res) => {
+  try {
+    let stop = await Stop.create(req.body)
+    await stop.save();
+    let trip = await Trip.findById(req.params.tripId).populate("stops");
+    if (!trip) {
+      res.status(500).send("Trip not found!");
+    }
+    if(req.params.index == -1) {
+      await trip.stops.push(stop);
+    } else {
+      await trip.stops.push(
+        {
+          $each: [stop],
+          $position: parseInt(req.params.index)
+        }
+      );
+    }
+    trip.save()
+    console.log(trip)
+    return res.status(200).json({ trip })
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+})
+
+// delete a stop from a trip
+router.delete("/trips/:tripId/removeStop/:stopId", async (req, res) => {
+  try {
+    const stop = await Stop.findByIdAndDelete(req.params.stopId);
+    if(!stop) {
+      res.status(500).send("Stop not found!");
+    }
+    const trip = await Trip.findByIdAndUpdate(
+      req.params.tripId,
+      { $pull: {stops: req.params.stopId} },
+      {new: true}
+    ).populate("stops");
+    res.status(200).send({trip})
+  } catch (error) {
+    res.status(500).send(error.message)
+  }
+})
+
 // delete a whole trip by id
 router.delete("/trips/:id", async (req, res) => {
   try {
