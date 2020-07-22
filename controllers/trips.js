@@ -60,48 +60,35 @@ router.put("/trips/:id", async (req, res) => {
   }
 });
 
-// update the name of the trip by its id
-router.put("/trips/:id/tripname/:name", async (req, res) => {
+// add a stop to trip at a specific index
+// if index is -1 it will add it to the end of the list
+router.put("/trips/:tripId/addStop/:index", async (req, res) => {
   try {
-    await Trip.findByIdAndUpdate(
-      req.params.id,
-      { $set: { name: req.params.name } },
-      { new: true },
-      (err, trip) => {
-        if (err) {
-          res.status(500).send("The error is: ", err);
-        }
-        if (!trip) {
-          res.status(500).send("Trip not found!");
-        }
-        return res.status(200).json(trip);
-      }
-    ).populate("stops");
-  } catch (error) {
-    return res.status(500).send("The error message is: ", error.message);
-  }
-});
-
-// update stops to a trip
-router.put("/trips/:tripId/addStops/:stopId", (req, res) => {
-  Stop.findById(req.params.stopId, (err, stop) => {
-    if (err) console.log(err);
-    else {
-      Trip.findByIdAndUpdate(
-        req.params.tripId,
+    console.log(req.body)
+    let stop = await Stop.create(req.body)
+    await stop.save();
+    let trip = await Trip.findById(req.params.tripId).populate("stops");
+    if (!trip) {
+      console.log("Trip not Found")
+      return res.status(500).send("Trip not found!");
+    }
+    if(req.params.index == -1) {
+      await trip.stops.push(stop);
+    } else {
+      await trip.stops.push(
         {
-          $push: {
-            stops: stop._id,
-          },
-        },
-        (err, trip) => {
-          if (err) console.log(err);
-          else res.send(trip);
+          $each: [stop],
+          $position: parseInt(req.params.index)
         }
       );
     }
-  });
-});
+    trip.save()
+    return res.status(200).json({ trip })
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+})
+
 
 // add a stop to trip at a specific index
 // if index is -1 it will add it to the end of the list

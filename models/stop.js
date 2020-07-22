@@ -2,8 +2,8 @@ const mongoose = require("../db/connection");
 
 const stopSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  lat: { type: Number },
-  lng: { type: Number },
+  lat: { type: Number, required: true},
+  lng: { type: Number, required: true},
   thingsToDo: [{ type: String }],
 });
 
