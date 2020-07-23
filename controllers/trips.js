@@ -46,17 +46,15 @@ router.post("/trip", async (req, res) => {
 router.put("/trips/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    await Trip.findByIdAndUpdate(id, req.body, { new: true }, (err, trip) => {
-      if (err) {
-        res.status(500).send(err);
-      }
+    const trip = await Trip.findByIdAndUpdate(id, req.body, { new: true }).populate("stops");
       if (!trip) {
+        console.log('trip not found')
         res.status(500).send("Trip not found!");
       }
       return res.status(200).json(trip);
-    });
   } catch (error) {
-    return res.status(500).send(error.message);
+    console.log(error.message)
+      return res.status(500).send(error.message);
   }
 });
 
