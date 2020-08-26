@@ -1,2 +1,2 @@
 # be-trippin-backend
-Node/Express/MongoDB backend supporting BeTrippin app
+Node/Express/MongoDB backend supporting BeTrippin app.
